@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sua Quadrilha</title>
+    <style>
+        /* Reset e Configurações Gerais */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        body { 
+            background: #000; 
+            overflow: hidden; 
+            color: white; 
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* Vídeo de Fundo */
+        #bg-video {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1;
+            transform: translate(-50%, -50%);
+            filter: brightness(0.4);
+            object-fit: cover;
+        }
+
+        /* Container Principal - Perfis próximos */
+        .main-container {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px; 
+        }
+
+        /* Card de Perfil Minimalista */
+        .profile-card {
+            background: transparent;
+            padding: 20px;
+            text-align: center;
+            width: 220px;
+            transition: all 0.4s ease;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .pfp {
+            width: 105px; height: 105px;
+            border-radius: 50%;
+            margin-bottom: 12px;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .name { font-size: 1.5rem; font-weight: bold; margin-bottom: 2px; }
+        .username { color: #aaa; font-size: 0.85rem; margin-bottom: 15px; }
+
+        /* Container das Insígnias */
+        .badges {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 45px;
+        }
+
+        /* Estilo das Novas Insígnias */
+        .badge-img {
+            height: 30px; /* Tamanho ajustado para destaque */
+            width: auto;
+            object-fit: contain;
+            mix-blend-mode: screen; 
+            filter: drop-shadow(0 0 5px rgba(0,0,0,0.6));
+        }
+
+        /* Controles de Áudio */
+        .audio-controls {
+            position: fixed;
+            top: 20px; left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 6px 15px;
+            border-radius: 50px;
+            backdrop-filter: blur(8px);
+            z-index: 10;
+        }
+
+        .btn-play { cursor: pointer; background: none; border: none; color: white; font-size: 1rem; }
+        input[type="range"] { cursor: pointer; accent-color: #fff; width: 70px; }
+    </style>
+</head>
+<body>
+
+    <video autoplay muted loop id="bg-video">
+        <source src="seu_video.mp4" type="video/mp4">
+    </video>
+
+    <audio id="bg-audio" loop>
+        <source src="goosebumps-feat-chase-atlantic-remix-lyrics.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="audio-controls">
+        <button class="btn-play" id="play-pause">▶</button>
+        <input type="range" id="volume-control" min="0" max="1" step="0.05" value="0.5">
+    </div>
+
+    <div class="main-container">
+        
+        <div class="profile-card">
+            <img src="foto1.jpg" class="pfp">
+            <div class="name">vitor</div>
+            <div class="username">@stripteasers</div>
+            <div class="badges">
+                <img src="ggg.png" class="badge-img">
+            </div>
+        </div>
+
+        <div class="profile-card">
+            <img src="foto2.jpg" class="pfp">
+            <div class="name">6963</div>
+            <div class="username">6963</div>
+            <div class="badges">
+                <img src="gggg.png" class="badge-img">
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const audio = document.getElementById('bg-audio');
+        const playBtn = document.getElementById('play-pause');
+        const volControl = document.getElementById('volume-control');
+
+        playBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                playBtn.textContent = '⏸';
+            } else {
+                audio.pause();
+                playBtn.textContent = '▶';
+            }
+        });
+
+        volControl.addEventListener('input', (e) => {
+            audio.volume = e.target.value;
+        });
+    </script>
+</body>
+</html>
