@@ -1,159 +1,667 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sua Quadrilha</title>
-    <style>
-        /* Reset e Configurações Gerais */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>quadrilha</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #050506;
+  --card-bg: rgba(16,16,18,0.75);
+  --bd: rgba(255,255,255,0.08);
+  --text: #ffffff;
+  --muted: #666;
+  --muted2: #888;
+  --online: #23a559;
+  --idle: #f0b232;
+  --dnd: #f23f43;
+  --offline: #80848e;
+  --card-w: 190px;
+  --card-expanded: 235px;
+  --radius: 22px;
+  --ease: cubic-bezier(.22,.61,.36,1);
+}
 
-        body { 
-            background: #000; 
-            overflow: hidden; 
-            color: white; 
-            height: 100vh;
-            width: 100vw;
-        }
+::-webkit-scrollbar { display: none; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-        /* Vídeo de Fundo */
-        #bg-video {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            z-index: -1;
-            transform: translate(-50%, -50%);
-            filter: brightness(0.4);
-            object-fit: cover;
-        }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 60px;
+  cursor: default;
+  user-select: none;
+}
 
-        /* Container Principal - Perfis próximos */
-        .main-container {
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 25px; 
-        }
+#bg-video {
+  position: fixed;
+  top: 50%; left: 50%;
+  min-width: 100%; min-height: 100%;
+  width: auto; height: auto;
+  z-index: 0;
+  transform: translate(-50%, -50%);
+  filter: brightness(0.18) blur(2px) saturate(0.5);
+  object-fit: cover;
+}
 
-        /* Card de Perfil Minimalista */
-        .profile-card {
-            background: transparent;
-            padding: 20px;
-            text-align: center;
-            width: 220px;
-            transition: all 0.4s ease;
-        }
+.noise {
+  position: fixed; inset: 0; pointer-events: none; z-index: 1;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.018;
+}
 
-        .profile-card:hover {
-            transform: translateY(-10px);
-        }
+/* ── navbar ── */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 52px; z-index: 200;
+}
+.nb-blur {
+  position: absolute; inset: 0;
+  backdrop-filter: blur(20px) saturate(1.5);
+  background: rgba(5,5,6,0.8);
+}
+.nb-line {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 1px; background: rgba(255,255,255,0.04);
+}
+.nb-inner {
+  position: relative; z-index: 2;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 100%; padding: 0 22px;
+}
+.nb-left { display: flex; align-items: center; gap: 10px; }
+.nb-logo {
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: .82rem; color: rgba(255,255,255,.9);
+  text-transform: lowercase; letter-spacing: -.01em;
+}
+.nb-sep { width: 1px; height: 13px; background: rgba(255,255,255,0.08); }
 
-        .pfp {
-            width: 105px; height: 105px;
-            border-radius: 50%;
-            margin-bottom: 12px;
-            object-fit: cover;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-        }
+.nb-cnl {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(224,48,48,0.08);
+  border: 1px solid rgba(224,48,48,0.22);
+  border-radius: 20px; padding: 4px 12px;
+  text-decoration: none;
+  transition: all .25s var(--ease);
+}
+.nb-cnl:hover {
+  background: rgba(224,48,48,0.16);
+  border-color: rgba(224,48,48,0.4);
+  transform: translateY(-1px);
+}
+.nb-cnl span {
+  font-family: 'Syne', sans-serif; font-size: .56rem;
+  font-weight: 700; color: rgba(255,255,255,.85); text-transform: uppercase;
+  letter-spacing: .06em;
+}
 
-        .name { font-size: 1.5rem; font-weight: bold; margin-bottom: 2px; }
-        .username { color: #aaa; font-size: 0.85rem; margin-bottom: 15px; }
+.audio-bar { display: flex; align-items: center; gap: 8px; }
+.track-name {
+  font-size: .57rem; color: var(--muted); text-transform: uppercase;
+  letter-spacing: .08em; max-width: 120px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.btn-play {
+  background: none; border: none; color: rgba(255,255,255,.7);
+  cursor: pointer; font-size: .75rem; padding: 0; width: 18px;
+  transition: color .2s;
+}
+.btn-play:hover { color: #fff; }
+input[type="range"] {
+  -webkit-appearance: none; width: 54px; height: 2px;
+  background: rgba(255,255,255,0.12); cursor: pointer; border-radius: 2px;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 8px; height: 8px;
+  border-radius: 50%; background: rgba(255,255,255,.8);
+}
 
-        /* Container das Insígnias */
-        .badges {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 45px;
-        }
+/* ── stage ── */
+.stage {
+  position: relative; z-index: 10;
+  display: flex;
+  justify-content: center;
+  gap: 20px; flex-wrap: wrap;
+  padding: 0 24px;
+  perspective: 1200px;
+}
 
-        /* Estilo das Novas Insígnias */
-        .badge-img {
-            height: 30px; /* Tamanho ajustado para destaque */
-            width: auto;
-            object-fit: contain;
-            mix-blend-mode: screen; 
-            filter: drop-shadow(0 0 5px rgba(0,0,0,0.6));
-        }
+/* ── card ── */
+.card {
+  position: relative;
+  width: var(--card-w);
+  background: var(--card-bg);
+  backdrop-filter: blur(24px) saturate(1.5);
+  border: 1px solid var(--bd);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition:
+    border-color .35s var(--ease),
+    box-shadow .35s var(--ease),
+    width .4s var(--ease);
+  overflow: hidden;
+}
+.card:hover {
+  width: var(--card-expanded);
+  border-color: rgba(255,255,255,0.14);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.04),
+    0 20px 60px rgba(0,0,0,0.6),
+    0 0 80px rgba(0,0,0,0.3);
+}
 
-        /* Controles de Áudio */
-        .audio-controls {
-            position: fixed;
-            top: 20px; left: 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 6px 15px;
-            border-radius: 50px;
-            backdrop-filter: blur(8px);
-            z-index: 10;
-        }
+.glare {
+  position: absolute; inset: 0;
+  border-radius: var(--radius);
+  pointer-events: none; z-index: 10;
+  opacity: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.20) 0%, transparent 60%);
+  transition: opacity .3s ease;
+}
 
-        .btn-play { cursor: pointer; background: none; border: none; color: white; font-size: 1rem; }
-        input[type="range"] { cursor: pointer; accent-color: #fff; width: 70px; }
-    </style>
+.ci {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 22px 14px 18px;
+}
+
+/* ── avatar ── */
+.aw {
+  position: relative;
+  width: 86px; height: 86px;
+  margin-bottom: 14px;
+  flex-shrink: 0;
+  transition: transform .4s var(--ease);
+}
+.card:hover .aw { transform: scale(1.06); }
+
+.av {
+  width: 100%; height: 100%;
+  border-radius: 50%; object-fit: cover;
+  border: 1.5px solid var(--bd);
+  background: #111;
+  transition: border-color .3s;
+}
+.card:hover .av { border-color: rgba(255,255,255,.18); }
+
+/* ── status dot ── */
+.sd {
+  position: absolute; bottom: 3px; right: 3px;
+  width: 13px; height: 13px;
+  border-radius: 50%;
+  border: 2px solid var(--bg);
+  background: var(--offline);
+  transition: background .4s, box-shadow .4s;
+}
+.sd.online  { background: var(--online); box-shadow: 0 0 6px rgba(35,165,89,.5); }
+.sd.idle    { background: var(--idle);   box-shadow: 0 0 6px rgba(240,178,50,.4); }
+.sd.dnd     { background: var(--dnd);    box-shadow: 0 0 6px rgba(242,63,67,.4); }
+
+.sd.online::after {
+  content: ''; position: absolute;
+  inset: -3px; border-radius: 50%;
+  border: 1.5px solid rgba(35,165,89,.35);
+  animation: pulse 2.5s ease-out infinite;
+}
+@keyframes pulse {
+  0%   { transform: scale(1); opacity: 1; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* ── name / username ── */
+.nm {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500; font-size: 1.05rem;
+  margin-bottom: 2px; line-height: 1;
+  letter-spacing: .01em;
+}
+.un {
+  font-size: .68rem; color: var(--muted2);
+  font-weight: 300; margin-bottom: 10px;
+  letter-spacing: .01em;
+}
+
+/* ── badges ── */
+.badges {
+  display: flex; justify-content: center; align-items: center;
+  gap: 6px; margin-bottom: 8px; flex-wrap: wrap; min-height: 24px;
+}
+.badge-img {
+  height: 22px; width: auto;
+  object-fit: contain;
+  mix-blend-mode: screen;
+  filter: drop-shadow(0 0 4px rgba(0,0,0,0.5));
+  transition: transform .2s var(--ease);
+}
+.badge-img:hover { transform: scale(1.2); }
+
+/* ── expand on hover ── */
+.expand {
+  width: 100%;
+  max-height: 0; overflow: hidden;
+  opacity: 0;
+  transition:
+    max-height .45s var(--ease),
+    opacity .35s var(--ease);
+  display: flex; flex-direction: column; align-items: center;
+  gap: 6px;
+}
+.card:hover .expand {
+  max-height: 220px;
+  opacity: 1;
+}
+
+.acc-age {
+  font-size: .56rem; color: var(--muted);
+  margin-top: 4px; margin-bottom: 2px;
+  letter-spacing: .02em;
+}
+
+/* ── activity block ── */
+.activity-block {
+  width: 100%; padding: 7px 9px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 10px;
+  font-size: .57rem; color: rgba(255,255,255,.6);
+  line-height: 1.5; text-align: left;
+}
+.activity-block .act-label {
+  font-family: 'Syne', sans-serif;
+  font-size: .46rem; font-weight: 700;
+  color: var(--muted); text-transform: uppercase;
+  letter-spacing: .07em; margin-bottom: 3px;
+  display: flex; align-items: center; gap: 4px;
+}
+.act-icon { font-size: .6rem; }
+.activity-block .act-name {
+  color: rgba(255,255,255,.9); font-weight: 500;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.activity-block .act-detail {
+  color: rgba(255,255,255,.45); font-weight: 300;
+  font-size: .52rem;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* ── meta status ── */
+.meta {
+  position: relative; z-index: 10;
+  margin-top: 14px;
+  display: flex; align-items: center; gap: 8px;
+  font-size: .58rem; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .07em;
+}
+.meta-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--muted);
+}
+
+/* ── skeleton ── */
+.skel {
+  background: linear-gradient(90deg, rgba(255,255,255,.04) 25%, rgba(255,255,255,.08) 50%, rgba(255,255,255,.04) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s infinite;
+  border-radius: 6px;
+}
+@keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+.skel-av { width: 72px; height: 72px; border-radius: 50%; margin-bottom: 12px; }
+.skel-nm { width: 70px; height: 16px; margin-bottom: 6px; }
+.skel-un { width: 50px; height: 10px; margin-bottom: 10px; }
+.skel-tag { width: 50px; height: 16px; border-radius: 8px; margin-bottom: 8px; }
+.skel-st { width: 80px; height: 10px; }
+
+/* ── toast ── */
+.toast {
+  position: fixed; bottom: 28px; left: 50%;
+  transform: translateX(-50%) translateY(12px);
+  background: rgba(24,24,26,.92);
+  border: 1px solid rgba(255,255,255,.1);
+  backdrop-filter: blur(14px);
+  color: rgba(255,255,255,.85);
+  font-family: 'Syne', sans-serif;
+  font-size: .6rem; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase;
+  padding: 8px 18px; border-radius: 20px;
+  pointer-events: none; z-index: 999;
+  opacity: 0;
+  transition: opacity .25s var(--ease), transform .25s var(--ease);
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+@media (max-width: 600px) {
+  body { align-items: center; padding-left: 0; }
+  .stage { justify-content: center; padding: 0 24px; }
+  :root { --card-w: 140px; --card-expanded: 175px; }
+  .ci { padding: 18px 11px 14px; }
+  .aw { width: 62px; height: 62px; }
+  .nm { font-size: .95rem; }
+}
+</style>
 </head>
 <body>
 
-    <video autoplay muted loop id="bg-video">
-        <source src="seu_video.mp4" type="video/mp4">
-    </video>
+<video autoplay muted loop id="bg-video">
+  <source src="seu_video.mp4" type="video/mp4">
+</video>
+<div class="noise"></div>
 
-    <audio id="bg-audio" loop>
-        <source src="goosebumps-feat-chase-atlantic-remix-lyrics.mp3" type="audio/mpeg">
-    </audio>
+<audio id="bg-audio" loop preload="auto">
+  <source src="goosebumps-feat-chase-atlantic-remix-lyrics.mp3" type="audio/mpeg">
+</audio>
 
-    <div class="audio-controls">
-        <button class="btn-play" id="play-pause">▶</button>
-        <input type="range" id="volume-control" min="0" max="1" step="0.05" value="0.5">
+<nav class="navbar">
+  <div class="nb-blur"></div>
+  <div class="nb-line"></div>
+  <div class="nb-inner">
+    <div class="nb-left">
+      <span class="nb-logo">quadrilha</span>
+      <div class="nb-sep"></div>
+      <a href="https://discord.gg/KnvVSKqymm" target="_blank" rel="noopener noreferrer" class="nb-cnl">
+        <span>strixy</span>
+      </a>
     </div>
-
-    <div class="main-container">
-        
-        <div class="profile-card">
-            <img src="foto1.jpg" class="pfp">
-            <div class="name">vitor</div>
-            <div class="username">@stripteasers</div>
-            <div class="badges">
-                <img src="ggg.png" class="badge-img">
-            </div>
-        </div>
-
-        <div class="profile-card">
-            <img src="foto2.jpg" class="pfp">
-            <div class="name">6963</div>
-            <div class="username">@6963</div>
-            <div class="badges">
-                <img src="gggg.png" class="badge-img">
-            </div>
-        </div>
-
+    <div class="audio-bar">
+      <span class="track-name" id="track-name">Goosebumps</span>
+      <button class="btn-play" id="pp" aria-label="play/pause">▶</button>
+      <input type="range" id="vl" min="0" max="1" step="0.01" value="0.5" aria-label="volume">
     </div>
+  </div>
+</nav>
 
-    <script>
-        const audio = document.getElementById('bg-audio');
-        const playBtn = document.getElementById('play-pause');
-        const volControl = document.getElementById('volume-control');
+<div class="stage" id="stage"></div>
 
-        playBtn.addEventListener('click', () => {
-            if (audio.paused) {
-                audio.play();
-                playBtn.textContent = '⏸';
-            } else {
-                audio.pause();
-                playBtn.textContent = '▶';
-            }
-        });
+<div class="meta">
+  <div class="meta-dot" id="meta-dot"></div>
+  <span id="meta-txt">carregando…</span>
+</div>
 
-        volControl.addEventListener('input', (e) => {
-            audio.volume = e.target.value;
-        });
-    </script>
+<div class="toast" id="toast"></div>
+
+<script>
+const USERS = [
+  {
+    id: '526171408603152384',
+    name: 'vitor',
+    tag: 'stripteasers',
+    badgeSrc: 'ggg.png',
+    customAv: 'foto1.jpg',
+  },
+  {
+    id: '1357372365188632719',
+    name: '6963',
+    tag: '6963',
+    badgeSrc: 'gggg.png',
+    customAv: 'foto2.jpg',
+  }
+];
+
+const REFRESH_MS = 10_000;
+
+function getAge(id) {
+  try {
+    const t = Number((BigInt(id) >> 22n) + 1420070400000n);
+    const d = new Date(t), n = new Date();
+    if (t > n.getTime()) return 'nova';
+    let y = n.getFullYear() - d.getFullYear();
+    let m = n.getMonth() - d.getMonth();
+    if (m < 0) { y--; m += 12; }
+    return y > 0 ? `${y}a ${m}m` : `${Math.floor((n - t) / 86400000)}d`;
+  } catch { return '?'; }
+}
+
+function avatarUrl(id, hash) {
+  if (!hash) {
+    const defId = Number(BigInt(id) >> 22n) % 6;
+    return `https://cdn.discordapp.com/embed/avatars/${defId}.png`;
+  }
+  const ext = hash.startsWith('a_') ? 'gif' : 'webp';
+  return `https://cdn.discordapp.com/avatars/${id}/${hash}.${ext}?size=256`;
+}
+
+function statusLabel(s) {
+  return { online: 'online', idle: 'ausente', dnd: 'ocupado', offline: 'offline' }[s] || 'offline';
+}
+
+function getActivity(activities = []) {
+  const spot = activities.find(a => a.type === 2);
+  if (spot) return {
+    label: 'ouvindo',
+    icon: '🎵',
+    name: spot.details || spot.name,
+    detail: spot.state ? `por ${spot.state}` : null
+  };
+  const game = activities.find(a => a.type === 0);
+  if (game) return {
+    label: 'jogando',
+    icon: '🎮',
+    name: game.name,
+    detail: game.details || null
+  };
+  const custom = activities.find(a => a.type === 4);
+  if (custom && custom.state) return {
+    label: 'status',
+    icon: '💬',
+    name: custom.state,
+    detail: null
+  };
+  return null;
+}
+
+async function fetchLanyard(id) {
+  try {
+    const r = await fetch(`https://api.lanyard.rest/v1/users/${id}`);
+    const j = await r.json();
+    return j.success ? j.data : null;
+  } catch { return null; }
+}
+
+const cardEls = {};
+
+function renderSkeleton(el) {
+  el.innerHTML = `
+    <div class="ci">
+      <div class="skel skel-av"></div>
+      <div class="skel skel-nm"></div>
+      <div class="skel skel-un"></div>
+      <div class="skel skel-tag"></div>
+      <div class="skel skel-st"></div>
+    </div>`;
+}
+
+function buildCardHTML(user, data) {
+  const discordAv = data?.discord_user?.avatar
+    ? avatarUrl(user.id, data.discord_user.avatar)
+    : null;
+  const av = discordAv || user.customAv || `https://cdn.discordapp.com/embed/avatars/0.png`;
+
+  const status = data?.discord_status || 'offline';
+  const act = getActivity(data?.activities || []);
+  const age = getAge(user.id);
+
+  const detailHTML = act?.detail
+    ? `<div class="act-detail">${act.detail.slice(0, 32)}${act.detail.length > 32 ? '…' : ''}</div>`
+    : '';
+
+  const actHTML = act ? `
+    <div class="activity-block">
+      <div class="act-label">
+        <span class="act-icon">${act.icon}</span>${act.label}
+      </div>
+      <div class="act-name">${act.name.slice(0, 28)}${act.name.length > 28 ? '…' : ''}</div>
+      ${detailHTML}
+    </div>` : '';
+
+  const badgeHTML = user.badgeSrc
+    ? `<img src="${user.badgeSrc}" class="badge-img" alt="badge" onerror="this.style.display='none'">`
+    : '';
+
+  return `
+    <div class="glare"></div>
+    <div class="ci">
+      <div class="aw">
+        <img class="av" src="${av}" alt="${user.name}" onerror="this.src='${user.customAv || 'https://cdn.discordapp.com/embed/avatars/0.png'}'">
+        <div class="sd ${status}"></div>
+      </div>
+      <div class="nm">${user.name}</div>
+      <div class="un">@${user.tag}</div>
+      <div class="badges">${badgeHTML}</div>
+      <div class="expand">
+        ${actHTML}
+        <div class="acc-age">conta criada há ${age}</div>
+      </div>
+    </div>`;
+}
+
+function applyTilt(el) {
+  const MAX_TILT = 15;
+  const SPD = 0.055;
+  const GLARE_INTENSITY = 0.20;
+  let curX = 0, curY = 0, tarX = 0, tarY = 0;
+  let glareEl = null;
+
+  function getGlare() {
+    if (!glareEl) glareEl = el.querySelector('.glare');
+    return glareEl;
+  }
+
+  function loop() {
+    curX += (tarX - curX) * SPD;
+    curY += (tarY - curY) * SPD;
+    el.style.transform = `perspective(900px) rotateX(${-curY * MAX_TILT}deg) rotateY(${curX * MAX_TILT}deg)`;
+    const g = getGlare();
+    if (g) {
+      const gx = (curX + 1) * 50;
+      const gy = (curY + 1) * 50;
+      g.style.background = `radial-gradient(circle at ${gx}% ${gy}%, rgba(255,255,255,${GLARE_INTENSITY}) 0%, rgba(255,255,255,0.04) 35%, transparent 60%)`;
+    }
+    requestAnimationFrame(loop);
+  }
+
+  el.addEventListener('mousemove', e => {
+    const r = el.getBoundingClientRect();
+    tarX = ((e.clientX - r.left) / r.width  - 0.5) * 2;
+    tarY = ((e.clientY - r.top)  / r.height - 0.5) * 2;
+    glareEl = null;
+    const g = getGlare();
+    if (g) g.style.opacity = '1';
+  });
+
+  el.addEventListener('mouseleave', () => {
+    tarX = 0; tarY = 0;
+    const g = getGlare();
+    if (g) g.style.opacity = '0';
+  });
+
+  requestAnimationFrame(loop);
+}
+
+function updateMeta(results) {
+  const online = results.filter(d => d?.discord_status === 'online').length;
+  const idle   = results.filter(d => d?.discord_status === 'idle').length;
+  const active = online + idle;
+  const dot = document.getElementById('meta-dot');
+  const txt = document.getElementById('meta-txt');
+
+  if (active > 0) {
+    dot.style.background = 'var(--online)';
+    dot.style.boxShadow = '0 0 6px rgba(35,165,89,.5)';
+    txt.textContent = `${active} de ${USERS.length} online`;
+  } else {
+    dot.style.background = 'var(--muted)';
+    dot.style.boxShadow = 'none';
+    txt.textContent = 'todos offline';
+  }
+}
+
+async function refresh() {
+  const results = await Promise.all(USERS.map(u => fetchLanyard(u.id)));
+  results.forEach((data, i) => {
+    const u = USERS[i];
+    const el = cardEls[u.id];
+    const newHTML = buildCardHTML(u, data);
+    if (el.dataset.lastRender !== newHTML) {
+      el.dataset.lastRender = newHTML;
+      el.innerHTML = newHTML;
+    }
+  });
+  updateMeta(results);
+}
+
+async function init() {
+  const stage = document.getElementById('stage');
+  USERS.forEach(u => {
+    const el = document.createElement('div');
+    el.className = 'card';
+    el.id = `card-${u.id}`;
+    renderSkeleton(el);
+    stage.appendChild(el);
+    cardEls[u.id] = el;
+    applyTilt(el);
+  });
+  await refresh();
+  setInterval(refresh, REFRESH_MS);
+}
+
+init();
+
+// ── audio ──
+const audio = document.getElementById('bg-audio');
+const pp = document.getElementById('pp');
+const vl = document.getElementById('vl');
+
+const savedVol = parseFloat(localStorage.getItem('site_vol') ?? '0.5');
+audio.volume = savedVol;
+vl.value = savedVol;
+
+function fadeIn(target = 0.5, duration = 1200) {
+  audio.volume = 0;
+  const step = target / (duration / 30);
+  const iv = setInterval(() => {
+    if (audio.volume + step >= target) { audio.volume = target; clearInterval(iv); }
+    else audio.volume += step;
+  }, 30);
+}
+
+function updateUI() { pp.textContent = audio.paused ? '▶' : '⏸'; }
+
+function tryAutoplay() {
+  audio.play().then(() => { fadeIn(parseFloat(vl.value)); updateUI(); })
+    .catch(() => {
+      document.body.addEventListener('click', () => {
+        audio.play().then(() => { fadeIn(parseFloat(vl.value)); updateUI(); }).catch(() => {});
+      }, { once: true });
+    });
+}
+
+pp.addEventListener('click', e => {
+  e.stopPropagation();
+  if (audio.paused) {
+    audio.play().then(() => { fadeIn(parseFloat(vl.value)); updateUI(); }).catch(() => {});
+  } else {
+    audio.pause(); updateUI();
+  }
+});
+
+vl.addEventListener('input', e => {
+  audio.volume = e.target.value;
+  localStorage.setItem('site_vol', e.target.value);
+});
+
+window.addEventListener('load', tryAutoplay);
+</script>
 </body>
 </html>
