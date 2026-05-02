@@ -374,7 +374,7 @@ input[type="range"]::-webkit-slider-thumb {
     <div class="nb-left">
       <span class="nb-logo">quadrilha</span>
       <div class="nb-sep"></div>
-      <a href="https://discord.gg/cFJveRMXHf" target="_blank" rel="noopener noreferrer" class="nb-cnl">
+      <a href="https://discord.gg/KnvVSKqymm" target="_blank" rel="noopener noreferrer" class="nb-cnl">
         <span>strixy</span>
       </a>
     </div>
@@ -620,10 +620,19 @@ function updateMeta(results) {
   const dot = document.getElementById('meta-dot');
   const txt = document.getElementById('meta-txt');
 
-  if (active > 0) {
-    dot.style.background = 'var(--online)';
-    dot.style.boxShadow = '0 0 6px rgba(35,165,89,.5)';
-    txt.textContent = `${active} de ${USERS.length} online`;
+  const dnd = results.filter(d => d?.discord_status === 'dnd').length;
+  const offline = results.filter(d => !d || d?.discord_status === 'offline').length;
+  const dot = document.getElementById('meta-dot');
+  const txt = document.getElementById('meta-txt');
+
+  if (online > 0 || idle > 0 || dnd > 0) {
+    const parts = [];
+    if (online > 0) parts.push(`${online} online`);
+    if (idle > 0) parts.push(`${idle} ausente`);
+    if (dnd > 0) parts.push(`${dnd} ocupado`);
+    dot.style.background = online > 0 ? 'var(--online)' : idle > 0 ? 'var(--idle)' : 'var(--dnd)';
+    dot.style.boxShadow = online > 0 ? '0 0 6px rgba(35,165,89,.5)' : idle > 0 ? '0 0 6px rgba(240,178,50,.4)' : '0 0 6px rgba(242,63,67,.4)';
+    txt.textContent = parts.join(' · ');
   } else {
     dot.style.background = 'var(--muted)';
     dot.style.boxShadow = 'none';
