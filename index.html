@@ -495,8 +495,12 @@ async function fetchLanyard(id) {
   try {
     const r = await fetch(`https://api.lanyard.rest/v1/users/${id}`);
     const j = await r.json();
+    console.log(`[Lanyard] ${id}:`, JSON.stringify(j).slice(0,200));
     return j.success ? j.data : null;
-  } catch { return null; }
+  } catch(e) {
+    console.error(`[Lanyard] ${id} ERRO:`, e.message);
+    return null;
+  }
 }
 
 const cardEls = {};
