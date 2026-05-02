@@ -60,7 +60,7 @@ body {
   opacity: 0.018;
 }
 
-/* ── navbar ── */
+/* navbar */
 .navbar {
   position: fixed; top: 0; left: 0; right: 0;
   height: 52px; z-index: 200;
@@ -86,7 +86,6 @@ body {
   text-transform: lowercase; letter-spacing: -.01em;
 }
 .nb-sep { width: 1px; height: 13px; background: rgba(255,255,255,0.08); }
-
 .nb-cnl {
   display: inline-flex; align-items: center; gap: 6px;
   background: rgba(224,48,48,0.08);
@@ -105,7 +104,6 @@ body {
   font-weight: 700; color: rgba(255,255,255,.85); text-transform: uppercase;
   letter-spacing: .06em;
 }
-
 .audio-bar { display: flex; align-items: center; gap: 8px; }
 .track-name {
   font-size: .57rem; color: var(--muted); text-transform: uppercase;
@@ -127,7 +125,7 @@ input[type="range"]::-webkit-slider-thumb {
   border-radius: 50%; background: rgba(255,255,255,.8);
 }
 
-/* ── stage ── */
+/* stage */
 .stage {
   position: relative; z-index: 10;
   display: flex;
@@ -137,7 +135,7 @@ input[type="range"]::-webkit-slider-thumb {
   perspective: 1200px;
 }
 
-/* ── card ── */
+/* card */
 .card {
   position: relative;
   width: var(--card-w);
@@ -177,7 +175,7 @@ input[type="range"]::-webkit-slider-thumb {
   overflow: hidden;
 }
 
-/* ── avatar ── */
+/* avatar */
 .aw {
   position: relative;
   width: 86px; height: 86px;
@@ -186,7 +184,6 @@ input[type="range"]::-webkit-slider-thumb {
   transition: transform .4s var(--ease);
 }
 .card:hover .aw { transform: scale(1.06); }
-
 .av {
   width: 100%; height: 100%;
   border-radius: 50%; object-fit: cover;
@@ -196,7 +193,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 .card:hover .av { border-color: rgba(255,255,255,.18); }
 
-/* ── status dot ── */
+/* status dot */
 .sd {
   position: absolute; bottom: 3px; right: 3px;
   width: 13px; height: 13px;
@@ -208,7 +205,6 @@ input[type="range"]::-webkit-slider-thumb {
 .sd.online  { background: var(--online); box-shadow: 0 0 6px rgba(35,165,89,.5); }
 .sd.idle    { background: var(--idle);   box-shadow: 0 0 6px rgba(240,178,50,.4); }
 .sd.dnd     { background: var(--dnd);    box-shadow: 0 0 6px rgba(242,63,67,.4); }
-
 .sd.online::after {
   content: ''; position: absolute;
   inset: -3px; border-radius: 50%;
@@ -220,7 +216,7 @@ input[type="range"]::-webkit-slider-thumb {
   100% { transform: scale(2.2); opacity: 0; }
 }
 
-/* ── name / username ── */
+/* name / username */
 .nm {
   font-family: 'DM Sans', sans-serif;
   font-weight: 500; font-size: 1.05rem;
@@ -233,7 +229,7 @@ input[type="range"]::-webkit-slider-thumb {
   letter-spacing: .01em;
 }
 
-/* ── badges ── */
+/* badges */
 .badges {
   display: flex; justify-content: center; align-items: center;
   gap: 6px; margin-bottom: 8px; flex-wrap: wrap; min-height: 24px;
@@ -247,7 +243,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 .badge-img:hover { transform: scale(1.2); }
 
-/* ── expand on hover ── */
+/* expand on hover */
 .expand {
   width: 100%;
   max-height: 0;
@@ -259,21 +255,20 @@ input[type="range"]::-webkit-slider-thumb {
     padding .4s var(--ease);
   display: flex; flex-direction: column; align-items: center;
   gap: 6px;
-  padding: 0 0;
+  padding: 0;
 }
 .card:hover .expand {
   max-height: 240px;
   opacity: 1;
   padding: 0 0 4px;
 }
-
 .acc-age {
   font-size: .56rem; color: var(--muted);
   margin-top: 4px; margin-bottom: 2px;
   letter-spacing: .02em;
 }
 
-/* ── activity block ── */
+/* activity */
 .activity-block {
   width: 100%; padding: 7px 9px;
   background: rgba(255,255,255,0.03);
@@ -300,7 +295,7 @@ input[type="range"]::-webkit-slider-thumb {
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 
-/* ── meta status ── */
+/* meta status */
 .meta {
   position: relative; z-index: 10;
   margin-top: 14px;
@@ -313,7 +308,7 @@ input[type="range"]::-webkit-slider-thumb {
   background: var(--muted);
 }
 
-/* ── skeleton ── */
+/* skeleton */
 .skel {
   background: linear-gradient(90deg, rgba(255,255,255,.04) 25%, rgba(255,255,255,.08) 50%, rgba(255,255,255,.04) 75%);
   background-size: 200% 100%;
@@ -321,14 +316,13 @@ input[type="range"]::-webkit-slider-thumb {
   border-radius: 6px;
 }
 @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-
 .skel-av { width: 72px; height: 72px; border-radius: 50%; margin-bottom: 12px; }
 .skel-nm { width: 70px; height: 16px; margin-bottom: 6px; }
 .skel-un { width: 50px; height: 10px; margin-bottom: 10px; }
 .skel-tag { width: 50px; height: 16px; border-radius: 8px; margin-bottom: 8px; }
 .skel-st { width: 80px; height: 10px; }
 
-/* ── toast ── */
+/* toast */
 .toast {
   position: fixed; bottom: 28px; left: 50%;
   transform: translateX(-50%) translateY(12px);
@@ -347,7 +341,6 @@ input[type="range"]::-webkit-slider-thumb {
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
 @media (max-width: 600px) {
-  body { align-items: center; padding-left: 0; }
   .stage { justify-content: center; padding: 0 24px; }
   :root { --card-w: 140px; --card-expanded: 175px; }
   .ci { padding: 18px 11px 14px; }
@@ -364,7 +357,7 @@ input[type="range"]::-webkit-slider-thumb {
 <div class="noise"></div>
 
 <audio id="bg-audio" loop preload="auto">
-  <source src="music.mp3" type="audio/mpeg">
+  <source src="goosebumps-feat-chase-atlantic-remix-lyrics.mp3" type="audio/mpeg">
 </audio>
 
 <nav class="navbar">
@@ -380,7 +373,7 @@ input[type="range"]::-webkit-slider-thumb {
     </div>
     <div class="audio-bar">
       <span class="track-name" id="track-name">Goosebumps</span>
-      <button class="btn-play" id="pp" aria-label="play/pause">▶</button>
+      <button class="btn-play" id="pp" aria-label="play/pause">&#9654;</button>
       <input type="range" id="vl" min="0" max="1" step="0.01" value="0.5" aria-label="volume">
     </div>
   </div>
@@ -390,7 +383,7 @@ input[type="range"]::-webkit-slider-thumb {
 
 <div class="meta">
   <div class="meta-dot" id="meta-dot"></div>
-  <span id="meta-txt">carregando…</span>
+  <span id="meta-txt">carregando...</span>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -420,7 +413,7 @@ const USERS = [
   }
 ];
 
-const REFRESH_MS = 10_000;
+const REFRESH_MS = 10000;
 
 function getAge(id) {
   try {
@@ -443,51 +436,18 @@ function avatarUrl(id, hash) {
   return `https://cdn.discordapp.com/avatars/${id}/${hash}.${ext}?size=256`;
 }
 
-function statusLabel(s) {
-  return { online: 'online', idle: 'ausente', dnd: 'ocupado', offline: 'offline' }[s] || 'offline';
-}
-
 function getActivity(data) {
   const activities = data?.activities || [];
-
-  // Lanyard spotify field (mais confiável)
   if (data?.spotify) {
     const s = data.spotify;
-    return {
-      label: 'ouvindo',
-      icon: '🎵',
-      name: s.song || s.album || 'Spotify',
-      detail: s.artist ? `por ${s.artist}` : null
-    };
+    return { label: 'ouvindo', icon: '🎵', name: s.song || s.album || 'Spotify', detail: s.artist ? `por ${s.artist}` : null };
   }
-
-  // Activity type 2 (Spotify via activities)
   const spot = activities.find(a => a.type === 2);
-  if (spot) return {
-    label: 'ouvindo',
-    icon: '🎵',
-    name: spot.details || spot.name,
-    detail: spot.state ? `por ${spot.state}` : null
-  };
-
-  // Game (type 0)
+  if (spot) return { label: 'ouvindo', icon: '🎵', name: spot.details || spot.name, detail: spot.state ? `por ${spot.state}` : null };
   const game = activities.find(a => a.type === 0);
-  if (game) return {
-    label: 'jogando',
-    icon: '🎮',
-    name: game.name,
-    detail: game.details || null
-  };
-
-  // Custom status (type 4)
+  if (game) return { label: 'jogando', icon: '🎮', name: game.name, detail: game.details || null };
   const custom = activities.find(a => a.type === 4);
-  if (custom && custom.state) return {
-    label: 'status',
-    icon: '💬',
-    name: custom.state,
-    detail: null
-  };
-
+  if (custom && custom.state) return { label: 'status', icon: '💬', name: custom.state, detail: null };
   return null;
 }
 
@@ -504,49 +464,27 @@ async function fetchLanyard(id) {
 
 const cardEls = {};
 
-function renderSkeleton(el) {
-  el.innerHTML = `
-    <div class="ci">
-      <div class="skel skel-av"></div>
-      <div class="skel skel-nm"></div>
-      <div class="skel skel-un"></div>
-      <div class="skel skel-tag"></div>
-      <div class="skel skel-st"></div>
-    </div>`;
-}
-
 function buildCardHTML(user, data) {
-  const discordAv = data?.discord_user?.avatar
-    ? avatarUrl(user.id, data.discord_user.avatar)
-    : null;
-  const av = discordAv || user.customAv || `https://cdn.discordapp.com/embed/avatars/0.png`;
-
+  const discordAv = data?.discord_user?.avatar ? avatarUrl(user.id, data.discord_user.avatar) : null;
+  const av = discordAv || user.customAv;
   const status = data?.discord_status || 'offline';
   const act = getActivity(data);
   const age = getAge(user.id);
 
-  const detailHTML = act?.detail
-    ? `<div class="act-detail">${act.detail.slice(0, 32)}${act.detail.length > 32 ? '…' : ''}</div>`
-    : '';
-
   const actHTML = act ? `
     <div class="activity-block">
-      <div class="act-label">
-        <span class="act-icon">${act.icon}</span>${act.label}
-      </div>
-      <div class="act-name">${act.name.slice(0, 28)}${act.name.length > 28 ? '…' : ''}</div>
-      ${detailHTML}
+      <div class="act-label"><span class="act-icon">${act.icon}</span>${act.label}</div>
+      <div class="act-name">${act.name.slice(0,28)}${act.name.length > 28 ? '…' : ''}</div>
+      ${act.detail ? `<div class="act-detail">${act.detail.slice(0,32)}${act.detail.length > 32 ? '…' : ''}</div>` : ''}
     </div>` : '';
 
-  const badgeHTML = user.badgeSrc
-    ? `<img src="${user.badgeSrc}" class="badge-img" alt="badge" onerror="this.style.display='none'">`
-    : '';
+  const badgeHTML = user.badgeSrc ? `<img src="${user.badgeSrc}" class="badge-img" alt="badge">` : '';
 
   return `
     <div class="glare"></div>
     <div class="ci">
       <div class="aw">
-        <img class="av" src="${av}" alt="${user.name}" onerror="this.src='${user.customAv || 'https://cdn.discordapp.com/embed/avatars/0.png'}'">
+        <img class="av" src="${av}" alt="${user.name}">
         <div class="sd ${status}"></div>
       </div>
       <div class="nm">${user.name}</div>
@@ -560,77 +498,54 @@ function buildCardHTML(user, data) {
 }
 
 function applyTilt(el) {
-  const MAX_TILT = 12;
-  const SPD = 0.06;
-  const GLARE_INTENSITY = 0.15;
-  let curX = 0, curY = 0, tarX = 0, tarY = 0;
-  let rafId = null;
-  let isHovered = false;
+  const MAX_TILT = 12, SPD = 0.06, GLARE_INTENSITY = 0.15;
+  let curX = 0, curY = 0, tarX = 0, tarY = 0, rafId = null, isHovered = false;
 
   function loop() {
     curX += (tarX - curX) * SPD;
     curY += (tarY - curY) * SPD;
-
     el.style.transform = `perspective(1000px) rotateX(${-curY * MAX_TILT}deg) rotateY(${curX * MAX_TILT}deg)`;
-
     const g = el.querySelector('.glare');
     if (g) {
-      const gx = (curX + 1) * 50;
-      const gy = (curY + 1) * 50;
-      g.style.background = `radial-gradient(circle at ${gx}% ${gy}%, rgba(255,255,255,${GLARE_INTENSITY}) 0%, rgba(255,255,255,0.03) 40%, transparent 65%)`;
+      g.style.background = `radial-gradient(circle at ${(curX+1)*50}% ${(curY+1)*50}%, rgba(255,255,255,${GLARE_INTENSITY}) 0%, rgba(255,255,255,0.03) 40%, transparent 65%)`;
     }
-
-    const dx = Math.abs(tarX - curX);
-    const dy = Math.abs(tarY - curY);
-    if (dx > 0.0003 || dy > 0.0003 || isHovered) {
+    if (Math.abs(tarX-curX) > 0.0003 || Math.abs(tarY-curY) > 0.0003 || isHovered) {
       rafId = requestAnimationFrame(loop);
-    } else {
-      rafId = null;
-    }
-  }
-
-  function start() {
-    if (!rafId) rafId = requestAnimationFrame(loop);
+    } else { rafId = null; }
   }
 
   el.addEventListener('mousemove', e => {
     const r = el.getBoundingClientRect();
-    tarX = ((e.clientX - r.left) / r.width  - 0.5) * 2;
-    tarY = ((e.clientY - r.top)  / r.height - 0.5) * 2;
+    tarX = ((e.clientX - r.left) / r.width - 0.5) * 2;
+    tarY = ((e.clientY - r.top) / r.height - 0.5) * 2;
     const g = el.querySelector('.glare');
     if (g) g.style.opacity = '1';
     isHovered = true;
-    start();
+    if (!rafId) rafId = requestAnimationFrame(loop);
   });
 
   el.addEventListener('mouseleave', () => {
-    tarX = 0; tarY = 0;
-    isHovered = false;
+    tarX = 0; tarY = 0; isHovered = false;
     const g = el.querySelector('.glare');
     if (g) g.style.opacity = '0';
-    start();
+    if (!rafId) rafId = requestAnimationFrame(loop);
   });
 }
 
 function updateMeta(results) {
-  const online = results.filter(d => d?.discord_status === 'online').length;
-  const idle   = results.filter(d => d?.discord_status === 'idle').length;
-  const active = online + idle;
+  const online  = results.filter(d => d?.discord_status === 'online').length;
+  const idle    = results.filter(d => d?.discord_status === 'idle').length;
+  const dnd     = results.filter(d => d?.discord_status === 'dnd').length;
   const dot = document.getElementById('meta-dot');
   const txt = document.getElementById('meta-txt');
 
-  const dnd = results.filter(d => d?.discord_status === 'dnd').length;
-  const offline = results.filter(d => !d || d?.discord_status === 'offline').length;
-  const dot = document.getElementById('meta-dot');
-  const txt = document.getElementById('meta-txt');
-
-  if (online > 0 || idle > 0 || dnd > 0) {
+  if (online + idle + dnd > 0) {
     const parts = [];
     if (online > 0) parts.push(`${online} online`);
-    if (idle > 0) parts.push(`${idle} ausente`);
-    if (dnd > 0) parts.push(`${dnd} ocupado`);
+    if (idle > 0)   parts.push(`${idle} ausente`);
+    if (dnd > 0)    parts.push(`${dnd} ocupado`);
     dot.style.background = online > 0 ? 'var(--online)' : idle > 0 ? 'var(--idle)' : 'var(--dnd)';
-    dot.style.boxShadow = online > 0 ? '0 0 6px rgba(35,165,89,.5)' : idle > 0 ? '0 0 6px rgba(240,178,50,.4)' : '0 0 6px rgba(242,63,67,.4)';
+    dot.style.boxShadow  = online > 0 ? '0 0 6px rgba(35,165,89,.5)' : idle > 0 ? '0 0 6px rgba(240,178,50,.4)' : '0 0 6px rgba(242,63,67,.4)';
     txt.textContent = parts.join(' · ');
   } else {
     dot.style.background = 'var(--muted)';
@@ -640,32 +555,27 @@ function updateMeta(results) {
 }
 
 async function refresh() {
-  let results;
-  try {
-    results = await Promise.all(USERS.map(u => fetchLanyard(u.id)));
-  } catch {
-    results = USERS.map(() => null);
-  }
-  results.forEach((data, i) => {
+  const results = await Promise.allSettled(USERS.map(u => fetchLanyard(u.id)));
+  const data = results.map(r => r.status === 'fulfilled' ? r.value : null);
+  data.forEach((d, i) => {
     const u = USERS[i];
     const el = cardEls[u.id];
     if (!el) return;
-    const newHTML = buildCardHTML(u, data);
-    if (el.dataset.lastRender !== newHTML) {
-      el.dataset.lastRender = newHTML;
-      el.innerHTML = newHTML;
+    const html = buildCardHTML(u, d);
+    if (el.dataset.last !== html) {
+      el.dataset.last = html;
+      el.innerHTML = html;
     }
   });
-  updateMeta(results);
+  updateMeta(data);
 }
 
-async function init() {
+function init() {
   const stage = document.getElementById('stage');
   USERS.forEach(u => {
     const el = document.createElement('div');
     el.className = 'card';
     el.id = `card-${u.id}`;
-    // render immediately with null data so cards show up right away
     el.innerHTML = buildCardHTML(u, null);
     stage.appendChild(el);
     cardEls[u.id] = el;
@@ -678,7 +588,7 @@ async function init() {
 
 init();
 
-// ── audio ──
+// audio
 const audio = document.getElementById('bg-audio');
 const pp = document.getElementById('pp');
 const vl = document.getElementById('vl');
@@ -696,23 +606,12 @@ function fadeIn(target = 0.5, duration = 1200) {
   }, 30);
 }
 
-function updateUI() { pp.textContent = audio.paused ? '▶' : '⏸'; }
-
-function tryAutoplay() {
-  audio.play().then(() => { fadeIn(parseFloat(vl.value)); updateUI(); })
-    .catch(() => {
-      document.body.addEventListener('click', () => {
-        audio.play().then(() => { fadeIn(parseFloat(vl.value)); updateUI(); }).catch(() => {});
-      }, { once: true });
-    });
-}
-
 pp.addEventListener('click', e => {
   e.stopPropagation();
   if (audio.paused) {
-    audio.play().then(() => { fadeIn(parseFloat(vl.value)); updateUI(); }).catch(() => {});
+    audio.play().then(() => { fadeIn(parseFloat(vl.value)); pp.textContent = '⏸'; }).catch(() => {});
   } else {
-    audio.pause(); updateUI();
+    audio.pause(); pp.textContent = '▶';
   }
 });
 
@@ -721,7 +620,14 @@ vl.addEventListener('input', e => {
   localStorage.setItem('site_vol', e.target.value);
 });
 
-window.addEventListener('load', tryAutoplay);
+window.addEventListener('load', () => {
+  audio.play().then(() => { fadeIn(parseFloat(vl.value)); pp.textContent = '⏸'; })
+    .catch(() => {
+      document.body.addEventListener('click', () => {
+        audio.play().then(() => { fadeIn(parseFloat(vl.value)); pp.textContent = '⏸'; }).catch(() => {});
+      }, { once: true });
+    });
+});
 </script>
 </body>
 </html>
